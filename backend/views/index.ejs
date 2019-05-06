@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to best <%= title %></p>
+
+    <p>Input the car</p>
+    <form action="/rental/check" method="post">
+      <input type="text" name="car" placeholder="Car name"><br/>
+      <input type="date" name="date_start" placeholder="Date from">
+      <input type="date" name="date_end" placeholder="Date to"><br/>
+      <button name="submit_button" type="submit">Submit query</button>
+    </form>
+    <br/>
+  </body>
+</html>
