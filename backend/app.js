@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mysql = require('mysql');
+var connection = require('./db.js');
 var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
@@ -11,21 +12,6 @@ var usersRouter = require('./routes/users');
 var rentalRouter = require('./routes/rental');
 
 var app = express();
-
-var db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'car_rental'
-});
-
-db.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log('Connected to database');
-});
-global.db = db;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
