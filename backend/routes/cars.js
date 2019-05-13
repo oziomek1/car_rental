@@ -62,8 +62,10 @@ router.post('/create', function(req, res, next) {
 });
 
 router.get('/edit/:id', function (req, res, next) {
-  connection.query('SELECT * FROM cars WHERE id = ', req.params.id, function (err, rows, fields) {
+  connection.query('SELECT * FROM cars WHERE id = ?', req.params.id, function (err, rows, fields) {
     if (err) {
+      res.redirect('/cars');
+    } else {
       res.render('cars/edit', {
         title: 'Edit car on stock',
         id: rows[0].id,
@@ -71,8 +73,6 @@ router.get('/edit/:id', function (req, res, next) {
         car_name: rows[0].car_name,
         price: rows[0].price
       });
-    } else {
-      res.redirect('/cars');
     }
   });
 });
@@ -114,7 +114,7 @@ router.post('/edit/:id', function (req, res, next) {
 });
 
 router.get('/delete/:id', function (req, res, next) {
-  connection.query('DELETE FROM cars WHERE id = ', req.params.id, function (err, result) {
+  connection.query('DELETE FROM cars WHERE id = ?', req.params.id, function (err, result) {
     if (err) {
       res.redirect('/cars');
     } else {
