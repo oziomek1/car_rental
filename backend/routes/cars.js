@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var connection = require('../db.js');
+let express = require('express');
+let router = express.Router();
+let connection = require('../db.js');
 
-/* GET users listing. */
+/* GET cars listing. */
 router.get('/', function(req, res, next) {
   connection.query('SELECT * FROM cars ORDER BY id', function (err, rows) {
     if (err) {
@@ -11,6 +11,22 @@ router.get('/', function(req, res, next) {
       res.render('cars', {
         title: 'Showing cars on stock',
         data: rows,
+      });
+    }
+  });
+});
+
+router.get('/details/:id', function(req, res, next) {
+  connection.query('SELECT * FROM cars WHERE id = ?', req.params.id, function (err, rows, fields) {
+    if (err) {
+      res.redirect('/cars')
+    } else {
+      res.render('users/details', {
+        title: 'Car with id ' + req.params.id,
+        id: rows[0].id,
+        license_plate: rows[0].license_plate,
+        car_name: rows[0].car_name,
+        price: rows[0].price
       });
     }
   });
@@ -27,16 +43,16 @@ router.get('/add', function (req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-  var licensePlate = req.body.license_plate;
-  var carName = req.body.car_name;
-  var price = req.body.price;
-  var errors = '';
+  let licensePlate = req.body.license_plate;
+  let carName = req.body.car_name;
+  let price = req.body.price;
+  let errors = '';
   if (licensePlate !== '' && carName !== '' && price !== '') {
     licensePlate = licensePlate.trim();
     carName = carName.trim();
     price = price.trim();
 
-    var car = {
+    let car = {
       license_plate: licensePlate,
       car_name: carName,
       price: price
@@ -78,10 +94,10 @@ router.get('/edit/:id', function (req, res, next) {
 });
 
 router.post('/edit/:id', function (req, res, next) {
-  var licensePlate = req.body.license_plate;
-  var carName = req.body.car_name;
-  var price = req.body.price;
-  var errors = '';
+  let licensePlate = req.body.license_plate;
+  let carName = req.body.car_name;
+  let price = req.body.price;
+  let errors = '';
   if (licensePlate !== '' && carName !== '' && price !== '') {
     licensePlate = licensePlate.trim();
     carName = carName.trim();
