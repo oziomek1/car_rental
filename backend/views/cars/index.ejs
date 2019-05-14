@@ -15,7 +15,7 @@
       <a href="/cars" class="btn btn-info ml-3">Cars List</a>
     </div>
 
-    <p>Showing available cars:</p>
+    <p>Showing all cars:</p>
     <table class="table">
       <thead>
         <tr>
@@ -23,6 +23,7 @@
           <th scope="col">ID</th>
           <th scope="col">License place</th>
           <th scope="col">Car name</th>
+          <th scope="col">Car photo</th>
           <th scope="col">Price</th>
           <th width="250px">Edit or Delete</th>
         </tr>
@@ -35,6 +36,9 @@
             <td><%= data[i].id %></td>
             <td><%= data[i].license_plate %></td>
             <td><%= data[i].car_name %></td>
+            <td>
+              <img src=<%=data[i].image_url%> width="200" height="150" />
+            </td>
             <td><%= data[i].price %></td>
             <td>
               <a class="btn btn-success edit" href="/cars/edit/<%=data[i].id%>">Edit</a>
