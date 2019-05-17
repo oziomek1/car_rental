@@ -11,12 +11,13 @@
       <a href="/" class="btn btn-primary ml-3">Home</a>
       <a href="/cars/add" class="btn btn-secondary ml-3">Add a new car</a>
       <a href="/cars" class="btn btn-info ml-3">Cars List</a>
+      <a href="/logout" class="btn btn-warning ml-3">Logout</a>
     </div>
     <p>Welcome to best <%= title %></p>
 
     <h2>Rent a car</h2>
     <div class="col-6">
-      <form action="/rentals" method="post">
+      <form action="/rentals/rentals" method="post">
         <div class="form-group row">
           <label for="date_start" class="col-2 col-form-label">Rent from:</label>
           <input class="form-control col-8" type="date" name="date_start"

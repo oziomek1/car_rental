@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1><%= title %></h1>
+    <div>
+        <a href="/" class="btn btn-primary ml-3">Home</a>
+        <a href="/cars/add" class="btn btn-secondary ml-3">Add a new car</a>
+        <a href="/cars" class="btn btn-info ml-3">Cars List</a>
+    </div>
+    <div class="col-6 col-offset-3">
+        <h2><span class="fa fa-sign-in"></span> Login</h2>
+
+        <!-- show any messages that come back with authentication -->
+        <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+        <% } %>
+
+        <form action="/login" method="post">
+            <div class="form-group row">
+                <label for="email" class="col-form-label">Email</label>
+                <input class="form-control" type="text" name="email">
+            </div>
+            <div class="form-group row">
+                <label for="password" class="col-2 col-form-label">Password</label>
+                <input class="form-control" type="text" name="password">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Login">
+        </form>
+        <hr/>
+
+        <p>Need an account? <a href="/signup">Signup</a></p>
+        <p>Go <a href="/">Home</a></p>
+    </div>
+</div>
+</body>
+</html>

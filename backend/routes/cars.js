@@ -2,8 +2,10 @@ let express = require('express');
 let router = express.Router();
 let connection = require('../db.js');
 
+let isLoggedIn = require('../config/middleware/isLoggedIn');
+
 /* GET cars listing. */
-router.get('/', function(req, res, next) {
+router.get('/', isLoggedIn, function(req, res, next) {
   connection.query('SELECT * FROM cars ORDER BY id', function (err, rows) {
     if (err) {
       throw err;
@@ -16,7 +18,7 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/details/:id', function(req, res, next) {
+router.get('/details/:id', isLoggedIn, function(req, res, next) {
   connection.query('SELECT * FROM cars WHERE id = ?', req.params.id, function (err, rows, fields) {
     if (err) {
       res.redirect('/cars')
@@ -32,7 +34,7 @@ router.get('/details/:id', function(req, res, next) {
   });
 });
 
-router.get('/add', function (req, res, next) {
+router.get('/add', isLoggedIn, function (req, res, next) {
   res.render('cars/add', {
     title: 'Add new car to stock',
     license_plate: '',
@@ -42,7 +44,7 @@ router.get('/add', function (req, res, next) {
   });
 });
 
-router.post('/create', function(req, res, next) {
+router.post('/create', isLoggedIn, function(req, res, next) {
   let licensePlate = req.body.license_plate;
   let carName = req.body.car_name;
   let price = req.body.price;
@@ -77,7 +79,7 @@ router.post('/create', function(req, res, next) {
   }
 });
 
-router.get('/edit/:id', function (req, res, next) {
+router.get('/edit/:id', isLoggedIn, function (req, res, next) {
   connection.query('SELECT * FROM cars WHERE id = ?', req.params.id, function (err, rows, fields) {
     if (err) {
       res.redirect('/cars');
@@ -93,7 +95,7 @@ router.get('/edit/:id', function (req, res, next) {
   });
 });
 
-router.post('/edit/:id', function (req, res, next) {
+router.post('/edit/:id', isLoggedIn, function (req, res, next) {
   let licensePlate = req.body.license_plate;
   let carName = req.body.car_name;
   let price = req.body.price;
@@ -129,7 +131,7 @@ router.post('/edit/:id', function (req, res, next) {
   }
 });
 
-router.get('/delete/:id', function (req, res, next) {
+router.get('/delete/:id', isLoggedIn, function (req, res, next) {
   connection.query('DELETE FROM cars WHERE id = ?', req.params.id, function (err, result) {
     if (err) {
       res.redirect('/cars');

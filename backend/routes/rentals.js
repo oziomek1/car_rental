@@ -2,15 +2,17 @@ let express = require('express');
 let router = express.Router();
 let connection = require('../db.js');
 
+let isLoggedIn = require('../config/middleware/isLoggedIn');
+
 let dateStartProposition = null;
 let dateEndProposition = null;
 
 /* POST rentals */
-router.post('/', function(req, res, next) {
+router.post('/rentals', isLoggedIn, function(req, res, next) {
   dateStartProposition = req.body.date_start;
   dateEndProposition = req.body.date_end;
-  connection.query('SELECT * FROM rentals WHERE rent_start >= ? AND rent_end <=',
-      dateStartProposition, dateEndProposition, function (err, rows, fields) {
+  connection.query('SELECT * FROM rentals WHERE rent_start = ?',
+      dateStartProposition, function (err, rows, fields) {
     if (err) {
       console.error(err);
       throw err;
@@ -29,12 +31,17 @@ router.post('/', function(req, res, next) {
   res.redirect('/rentals');
 });
 
-/* GET rentals */
-router.get('/', function(req, res, next) {
-  res.render('rentals', {
-    title: 'Rent a car - detailed info',
-    dateStart: dateStartProposition,
-    dateEnd: dateEndProposition,
+/* GET home page. */
+router.get('/', isLoggedIn, function(req, res, next) {
+
+  console.log('Req.user', req.user);
+  let today = new Date();
+  let tommorow = new Date();
+  tommorow.setDate(new Date().getDate() + 1);
+  res.render('rentals/index', {
+    title: 'Rent a car',
+    date_start: today.toISOString().slice(0, 10),
+    date_end: tommorow.toISOString().slice(0, 10),
   });
 });
 
