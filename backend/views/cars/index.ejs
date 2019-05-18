@@ -8,50 +8,67 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-    <h2><%= title %></h2>
-    <div>
-      <a href="/" class="btn btn-primary ml-3">Home</a>
-      <a href="/cars/add" class="btn btn-secondary ml-3">Add a new car</a>
-      <a href="/cars" class="btn btn-info ml-3">Cars List</a>
-    </div>
-
-    <p>Showing all cars:</p>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">ID</th>
-          <th scope="col">License place</th>
-          <th scope="col">Car name</th>
-          <th scope="col">Car photo</th>
-          <th scope="col">Price</th>
-          <th width="250px">Edit or Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if(data.length) {
-          for(var i = 0; i < data.length; i++) {%>
-          <tr>
-            <th scope="row"><%= (i + 1) %></th>
-            <td><%= data[i].id %></td>
-            <td><%= data[i].license_plate %></td>
-            <td><%= data[i].car_name %></td>
-            <td>
-              <img class="img-thumbnail img-fluid" src=<%=data[i].image_url%> width="200" height="150" />
-            </td>
-            <td><%= data[i].price %></td>
-            <td>
-              <a class="btn btn-success edit" href="/cars/edit/<%=data[i].id%>">Edit</a>
-              <a class="btn btn-danger delete" href="/cars/delete/<%=data[i].id%>">Delete</a>
-            </td>
-          </tr>
-        <% }
-        } else { %>
-          <tr>
-            <td colspan="3">No cars</td>
-          </tr>
+    <div class="container">
+      <h2><%= title %></h2>
+      <div>
+        <a href="/" class="btn btn-primary ml-3">Home</a>
+        <% if (isAdmin) { %>
+          <a href="/cars/add" class="btn btn-success ml-3">Add a new car</a>
         <% } %>
-      </tbody>
-    </table>
+        <a href="/rentals" class="btn btn-success ml-3">Rent a car</a>
+        <% if (!isAuth) { %>
+          <a href="/login" class="btn btn-light ml-3">Login</a>
+        <% } else { %>
+          <a href="/logout" class="btn btn-dark ml-3">Logout</a>
+        <% } %>
+      </div>
+
+      <p>Showing all cars:</p>
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">License plate</th>
+            <th scope="col">Make</th>
+            <th scope="col">Model</th>
+            <th scope="col">Car photo</th>
+            <th scope="col">Price</th>
+            <% if (isAdmin) { %>
+              <th width="200px">Edit or Delete</th>
+            <% } %>
+          </tr>
+        </thead>
+        <tbody>
+          <% if(data.length) {
+            for(var i = 0; i < data.length; i++) {%>
+            <tr>
+              <th scope="row"><%= (i + 1) %></th>
+              <td><%= data[i].id %></td>
+              <td><%= data[i].licensePlate %></td>
+              <td><%= data[i].make %></td>
+              <td><%= data[i].model %></td>
+              <td>
+                <a href="/cars/details/<%=data[i].id%>">
+                  <img class="img-thumbnail img-fluid" src=<%=data[i].imageUrl%> width="200" height="150" />
+                </a>
+              </td>
+              <td><%= data[i].price %></td>
+              <% if (isAdmin) { %>
+                <td>
+                  <a class="btn btn-success edit" href="/cars/edit/<%=data[i].id%>">Edit</a>
+                  <a class="btn btn-danger delete" href="/cars/delete/<%=data[i].id%>">Delete</a>
+                </td>
+              <% } %>
+            </tr>
+          <% }
+          } else { %>
+            <tr>
+              <td colspan="3">No cars</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

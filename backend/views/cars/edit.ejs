@@ -9,24 +9,42 @@
 </head>
 <body>
     <h2><%= title %></h2>
+    <a href="/" class="btn btn-primary ml-3">Home</a>
+    <a href="/rentals/all" class="btn btn-success ml-3">Check all rentals</a>
+    <a href="/cars" class="btn btn-success ml-3">Cars List</a>
+    <% if (!isAuth) { %>
+        <a href="/login" class="btn btn-light ml-3">Login</a>
+    <% } else { %>
+        <a href="/logout" class="btn btn-dark ml-3">Logout</a>
+    <% } %>
 
     <p>Edit a car with ID <%=id%>:</p>
     <div class="col-6">
         <form action="/cars/edit/<%=id%>" method="post" name="car_form">
             <div class="form-group row">
-                <label for="license_plate1" class="col-2 col-form-label">License Plate</label>
-                <input class="form-control col-8" type="text" name="license_plate"
-                       value="<%=license_plate%>" placeholder="License plate">
+                <label for="licensePlate1" class="col-2 col-form-label">License Plate</label>
+                <input class="form-control col-8" type="text" name="licensePlate"
+                       value="<%=licensePlate%>" placeholder="License plate">
             </div>
             <div class="form-group row">
-                <label for="car_name1" class="col-2 col-form-label">Car name</label>
-                <input class="form-control col-8" type="text" name="car_name"
-                       value="<%=car_name%>" placeholder="Car name">
+                <label for="make" class="col-2 col-form-label">Make</label>
+                <input class="form-control col-8" type="text" name="make"
+                       value="<%=make%>" placeholder="Make">
             </div>
             <div class="form-group row">
-                <label for="price1" class="col-2 col-form-label">Price</label>
+                <label for="mode" class="col-2 col-form-label">Car name</label>
+                <input class="form-control col-8" type="text" name="model"
+                       value="<%=model%>" placeholder="Model">
+            </div>
+            <div class="form-group row">
+                <label for="price" class="col-2 col-form-label">Price</label>
                 <input class="form-control col-8" type="text" name="price"
                        value="<%=price%>" placeholder="Price">
+            </div>
+            <div class="form-group row">
+                <label for="imageUrl" class="col-2 col-form-label">Image Url</label>
+                <input class="form-control col-8" type="text" name="imageUrl"
+                       value="<%=imageUrl%>" placeholder="Image Url">
             </div>
             <input type="submit" class="btn btn-primary" value="Update car">
         </form>

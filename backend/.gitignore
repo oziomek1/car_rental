@@ -26,4 +26,5 @@ coverage
 # Benchmarking
 benchmarks/graphs
 
-.*/config.json
+#config
+config/config.json

@@ -3,14 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mysql = require('mysql');
-var connection = require('./db.js');
 var session = require('express-session');
 var flash = require('connect-flash');
 var passport = require('passport');
 
 var authRouter = require('./routes/auth');
-var usersRouter = require('./routes/users');
 var rentalsRouter = require('./routes/rentals');
 var carsRouter = require('./routes/cars');
 
@@ -30,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: 'secret',
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 300000 },
   resave: true,
   rolling: true,
   saveUninitialized: false,
@@ -47,7 +44,6 @@ db.sequelize.sync().then(function (){
 
 // routes
 app.use('/', authRouter);
-app.use('/users', usersRouter);
 app.use('/cars', carsRouter);
 app.use('/rentals', rentalsRouter);
 

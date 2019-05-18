@@ -5,6 +5,15 @@ let passport = require('passport');
 let isLoggedIn = require('../config/middleware/isLoggedIn');
 
 router.get('/', function(req, res) {
+  const isAuth = req.isAuthenticated();
+  res.render('home', {
+    title: 'Home page',
+    message: req.flash('homeMessage'),
+    isAuth: isAuth
+  });
+});
+
+router.get('/login', function(req, res) {
   res.render('auth/login', {
     title: 'Login page',
     message: req.flash('loginMessage')
@@ -13,7 +22,7 @@ router.get('/', function(req, res) {
 
 router.post('/login', passport.authenticate('local-login', {
   successRedirect : '/rentals',
-  failureRedirect: '/',
+  failureRedirect: '/login',
   failureFlash : true
 }));
 
