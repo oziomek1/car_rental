@@ -134,7 +134,8 @@ router.get('/submit/:id', isLoggedIn, function (req, res, next) {
       rentEnd: req.query.dateEnd,
       price: req.query.price,
       UserId: req.user.id,
-      CarId: req.params.id
+      CarId: req.params.id,
+      status: 0
   };
   models.Rental.create(rental).then(() => res.redirect('/rentals/rentals'));
 });
